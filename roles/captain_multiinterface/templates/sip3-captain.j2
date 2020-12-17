@@ -1,0 +1,15 @@
+#!/bin/sh
+. /etc/sip3-captain/{{ captain.pcap.dev }}/environment.conf
+
+{% if "dpdk" in features or "sip3-libpcap" in features -%}
+export LD_LIBRARY_PATH=/opt/sip3-captain/{{ captain.pcap.dev }}/lib:$LD_LIBRARY_PATH
+{% endif %}
+
+$JAVA_HOME/bin/java \
+ $JAVA_OPTS \
+ -jar /opt/sip3-captain/sip3-captain.jar \
+ -Dconfig.location=/etc/sip3-captain/{{ captain.pcap.dev }}/application.yml \
+ -Dlogback.configurationFile=/etc/sip3-captain/{{ captain.pcap.dev }}/logback.xml \
+ -Dvertx.cacheDirBase=/tmp/sip3-captain/{{ captain.pcap.dev }} \
+ $VERTX_OPTS \
+2>&1 >>/var/log/sip3-captain/{{ captain.pcap.dev }}/default.log

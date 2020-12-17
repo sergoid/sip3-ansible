@@ -30,7 +30,7 @@
       tags: storage
 
 - name: "Install OpenJDK"
-  hosts: captain, salto, twig, backend
+  hosts: captain, salto, twig, backend, captain_multiinterface
   roles:
     - role: ../roles/java
       tags: backend, sip3, salto, twig, captain
@@ -63,4 +63,10 @@
   hosts: captain
   roles:
     - role: ../roles/captain
+      tags: sip3, captain
+
+- name: "Install SIP3 Captain for multiinterface"
+  hosts: captain_multiinterface
+  roles:
+    - role: ../roles/captain_multiinterface
       tags: sip3, captain
